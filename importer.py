@@ -14,6 +14,9 @@ from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 from pathlib import Path
 
+
+os.chdir(Path(__file__).parent)
+
 def sftp_load(backlog = 30):
     
     # Process backlog
