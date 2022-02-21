@@ -212,6 +212,10 @@ if __name__ == "__main__":
     install()
     sftp_load(30)
     process_files()
+    if not os.path.exists('log'):
+        Path('log').touch()
+    with open('log', 'a') as l:
+        l.write(datetime.datetime.now().strftime('%d-%m-%Y %H:%M:%S')+'\n')
     #TODO
     #Make list, that tracks what has been imported, so don't DL again
     #Import into InfluxDB
