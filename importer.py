@@ -12,6 +12,7 @@ import datetime
 import pysftp
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
+from pathlib import Path
 
 def sftp_load(backlog = 30):
     
@@ -190,9 +191,25 @@ def process_files():
         for GF in GAS_files:
             print(f'Processing {year}/{reactor}/{GF}')
             ingest_GAS(year, reactor, GF)
-   
+
+def install():
+    year = datetime.datetime.now().strftime('%Y')
+    #year="2023"
+    for folder in ['HAL', 'HAL_sftp', 'Gasstore']:
+        if not os.path.exists(folder):
+            os.makedirs(folder)
+    if not os.path.exists(f'Gasstore/{year}'):
+        os.makedirs(f'Gasstore/{year}')
+    for r in range(1,9):
+        if not os.path.exists(f'Gasstore/{year}/R0{str(r)}'):
+            os.makedirs(f'Gasstore/{year}/R0{str(r)}')
+        if not os.path.exists(f'Gasstore/{year}/R0{str(r)}_log'):
+            Path(f'Gasstore/{year}/R0{str(r)}_log').touch()
+            
+
 if __name__ == "__main__":
-    print("You are running importer.py as __main__")
+    #print("You are running importer.py as __main__")
+    install()
     sftp_load(30)
     process_files()
     #TODO
