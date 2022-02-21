@@ -14,7 +14,7 @@ from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
 from pathlib import Path
 
-
+# Changing the working directory to where the file is located, needed for Cron
 os.chdir(Path(__file__).parent)
 
 def sftp_load(backlog = 30):
